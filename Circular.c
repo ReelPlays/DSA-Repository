@@ -119,38 +119,77 @@ void printOrder(Queue *q){
 	if(!isEmpty(*q)){
 		int i;
 		for(i = q->front ; i != (q->rear + 1)% MAX; i = (i+1)% MAX){
-			printf("%d");
+			int var = Top(q);
+			Dequeue(q);
+			printf("%d", var);
 		}
 	}
 }
 
+void EnqueueSorted(Queue *q, int x) {
+    Queue temp;
+    initQueue(&temp);
+    int var;
+
+    // Case 1: empty queue
+    if (isEmpty(*q)) {
+        Enqueue(q, x);
+        return;
+    }
+
+    // Case 2: move until correct position
+    while (!isEmpty(*q)) {
+        var = Top(q);
+        Dequeue(q);
+
+        if (var > x) {
+            Enqueue(&temp, x);   // insert x before the bigger element
+            // put current element too
+            Enqueue(&temp, var);
+            break;  // stop checking, just move the rest
+        } else {
+            Enqueue(&temp, var);
+        }
+    }
+
+    // Move the rest of q into temp
+    while (!isEmpty(*q)) {
+        Enqueue(&temp, Top(q));
+        Dequeue(q);
+    }
+
+    // If x is bigger than all, it wasn’t inserted yet ? put it at end
+    if (Bottom(&temp) < x) {   // Rear() = last element accessor
+        Enqueue(&temp, x);
+    }
+
+    // Copy back
+    while (!isEmpty(temp)) {
+        Enqueue(q, Top(&temp));
+        Dequeue(&temp);
+    }
+}
 
 
 int main(){
 	Queue q1;
 	initQueue(&q1);
+	
+	Queue q2;
+	initQueue(&q2);
 	int var;
 	Node s1 = {1,2,3,4,5};
+	Node s2 = {3,2,1,4,5};
 	
-	Enqueue(&q1, s1.data[0]);
-	Enqueue(&q1, s1.data[3]);
-	Dequeue(&q1);
+	EnqueueSorted(&q2, s2.data[0]);
+	EnqueueSorted(&q2, s2.data[1]);
+	EnqueueSorted(&q2, s2.data[2]);
+	EnqueueSorted(&q2, s2.data[3]);
+	EnqueueSorted(&q2, s2.data[4]);
 	
-	
-	
-	for(int i = 0 ; i < 5 ; i++){
-		Enqueue(&q1, s1.data[i]);
-		var = Bottom(&q1);
-			printf("%d\n", var);
-		 
-	}
-
+	printOrder(&q2);
 
 	
-	printOrder(&q1);
-
-int elem = FindElemAgain (&q1, 4);
-printf("Found %d",elem);
 
 //	for(int i = 0 ; i < 5 ; i++){
 //		var = Top(&q1);
