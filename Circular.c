@@ -88,7 +88,7 @@ int FindElem(Queue *temp, int x){
     Queue q;
     initQueue(&q);
     q = *temp; 
-    
+    // test
     int var;
     int count = (q.rear - q.front + MAX) % MAX + 1; 
     
