@@ -15,12 +15,13 @@ void insert(SET *A, int element) {
 
 // Display the elements of the set
 void displaySet(SET *A) {
-    printf("Set contains: ");
+
     for (int i = 0; i < 8; i++) {
         if (*A & (1 << i)) {  
             printf("%d ", i);
         }
     }
+    
     printf("\n");
 }
 
@@ -58,7 +59,6 @@ int main() {
 
     insert(&setA, 0);
     insert(&setA, 4);
-    insert(&setA, 5);
     insert(&setA, 6);
     insert(&setA, 7);
 
@@ -76,17 +76,17 @@ int main() {
     displaySet(&setB);
 
     SET setUnion = unionSets(&setA, &setB);
-    printf("Union of A and B: ");
+    printf("A U B: ");
     displaySet(&setUnion);
 
  
     SET setIntersection = intersection(&setA, &setB);
-    printf("Intersection of A and B: ");
+    printf("A n B: ");
     displaySet(&setIntersection);  
 
 
     SET setDifference = difference(&setA, &setB);
-    printf("Difference of A and B (A - B): ");
+    printf("(A - B): ");
     displaySet(&setDifference);
 
     return 0;
