@@ -67,6 +67,19 @@ void printDictionary(Dictionary D){
 	}
 }
 
+bool isMember(Dictionary D, int data){
+	int val = hash(data);
+	Nodetype * trav;
+	for(trav = &D[val]; *trav != NULL && (*trav)->data != data; trav = &(*trav)->link){}
+	if(*trav != NULL){
+		return true;
+	}
+	else{
+		return false;
+	}
+	
+}
+
 int main(){
 	Dictionary D;
 	initDict(D);
